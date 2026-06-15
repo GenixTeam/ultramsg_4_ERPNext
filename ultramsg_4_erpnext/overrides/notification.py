@@ -103,7 +103,7 @@ class ERPGulfNotification(Notification):
               frappe.log("Unexpected response from WhatsApp API")
         else:
         # Log HTTP error
-             frappe.log("WhatsApp API returned a non-200 status code: " ,str(response.status_code))
+             frappe.log("WhatsApp API returned a non-200 status code: " )
         return response.text
     except Exception as e:
         frappe.log_error(title='Failed to send notification', message=frappe.get_traceback())  
