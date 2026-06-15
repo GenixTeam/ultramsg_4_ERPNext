@@ -54,13 +54,13 @@ class ERPGulfNotification(Notification):
             frappe.get_doc({"doctype":"ultramsg_4_ERPNext log","title":"Whatsapp message and pdf successfully sent ","message":msg1,"to_number":doc.custom_mobile_phone,"time":current_time }).insert()
           elif "error" in  response_json:
             # Log error
-            frappe.log("WhatsApp API Error: " ,  response_json.get("error"))
+            frappe.log("WhatsApp API Error: " + str(response_json.get("error")))  
           else:
             # Log unexpected response
             frappe.log("Unexpected response from WhatsApp API")
       else:
         # Log HTTP error
-        frappe.log("WhatsApp API returned a non-200 status code: " ,str(response.status_code))
+        frappe.log("WhatsApp API returned a non-200 status code: " + str(response.status_code))
         return response
     except Exception as e:
         frappe.log_error(title='Failed to send notification', message=frappe.get_traceback())  
@@ -97,13 +97,13 @@ class ERPGulfNotification(Notification):
               frappe.get_doc({"doctype":"ultramsg_4_ERPNext log","title":"Whatsapp message successfully sent ","message":msg1,"to_number":doc.custom_mobile_phone,"time":current_time }).insert()
             elif "error" in  response_json:
             # Log error
-              frappe.log("WhatsApp API Error: " ,  response_json.get("error"))
+              frappe.log("WhatsApp API Error: " + str(response_json.get("error")))
             else:
             # Log unexpected response
               frappe.log("Unexpected response from WhatsApp API")
         else:
         # Log HTTP error
-             frappe.log("WhatsApp API returned a non-200 status code: " )
+             frappe.log("WhatsApp API returned a non-200 status code: " + str(response.status_code))
         return response.text
     except Exception as e:
         frappe.log_error(title='Failed to send notification', message=frappe.get_traceback())  
