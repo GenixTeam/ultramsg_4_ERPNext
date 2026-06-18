@@ -122,22 +122,36 @@ class ERPGulfNotification(Notification):
       if self.channel == "whatsapp message":
         # if attach_print and print format both are working then it send pdf with message
         if self.attach_print or  self.print_format:
+          # frappe.enqueue(
+          #   self.send_whatsapp_with_pdf(doc, context),
+          #   queue="long",
+          #   timeout=200,
+          #   doc=doc,
+          #   context=context
+          #   )
           frappe.enqueue(
-            self.send_whatsapp_with_pdf(doc, context),
-            queue="short",
-            timeout=200,
-            doc=doc,
-            context=context
-            )
+              self.send_whatsapp_with_pdf,   # just the reference, no ()
+              queue="long",
+              timeout=200,
+              doc=doc,
+              context=context
+          )
                # otherwise send only message   
         else:
+        #   frappe.enqueue(
+        #   self.send_whatsapp_without_pdf(doc, context),
+        #   queue="long",
+        #   timeout=200,
+        #   doc=doc,
+        #   context=context
+        #  )
           frappe.enqueue(
-          self.send_whatsapp_without_pdf(doc, context),
-          queue="short",
-          timeout=200,
-          doc=doc,
-          context=context
-         )
+              self.send_whatsapp_without_pdf,   # just the reference, no ()
+              queue="long",
+              timeout=200,
+              doc=doc,
+              context=context
+          )
     except:
             frappe.log_error(title='Failed to send notification', message=frappe.get_traceback())  
     super(ERPGulfNotification, self).send(doc)
